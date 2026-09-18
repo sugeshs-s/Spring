@@ -14,4 +14,23 @@ public class AppService {
     public List<AppModel> getAll(){
         return repository.findAll();
     }
-}
+    public AppModel getById(long id) {
+        return repository.findById(id).orElse(null);
+    }
+    public AppModel updateById(Long id ,AppModel table) {
+        AppModel Model= repository.findById(id).orElse(null);
+        if (Model != null) {
+            Model.setName(table.getName());
+            Model.setPhone(table.getPhone());
+        }
+        return repository.save(Model);
+    }
+    public String deleteById(Long id) {
+        AppModel Model= repository.findById(id).orElse(null);
+        if (Model == null) {
+             repository.deleteById(id);
+            return "Deleted Successfully";
+        }
+        return "id not found";
+    }
+}  
